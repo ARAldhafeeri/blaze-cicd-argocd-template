@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blazecicd-client-deployment
+  namespace: blazecicd
+  labels:
+    app: blazecicd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blazecicd-client
+  template:
+    metadata:
+      labels:
+        app: blazecicd-client
+    spec:
+      containers:
+        - name: blazecicd-client
+          image: araldhafeeri/blazecicd-client:15e1abb1a20590a67d61b53180fec84896e9d5b7
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: dkr-registry
